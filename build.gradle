@@ -1,0 +1,47 @@
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'maven'
+    apply plugin: 'application'
+
+    sourceCompatibility = 1.7
+    
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    eclipse {
+        classpath {
+            downloadSources = true
+        }
+    }
+}
+
+project(":" + rootProject.name + "-client"){
+    mainClassName = "com.tyrus.client.TyrusClient"
+
+    dependencies {
+        compile 'org.glassfish.tyrus:tyrus-client:1.11'
+        compile 'org.glassfish.tyrus:tyrus-container-grizzly-client:1.11'
+        compile 'org.glassfish.grizzly:grizzly-http-server:2.3.19'
+		compile 'org.glassfish.tyrus:tyrus-container-grizzly-server:1.11'
+        
+        testCompile 'junit:junit:4.8.1'
+        testCompile 'org.jmock:jmock-junit4:2.5.1'
+        testCompile 'org.jmock:jmock-legacy:2.5.1'
+    }
+}
+
+project(":" + rootProject.name +"-server") {
+	mainClassName = "com.tyrus.server.TyrusServer"
+
+    dependencies {
+    	compile 'org.glassfish.grizzly:grizzly-http-server:2.3.19'
+		compile 'org.glassfish.tyrus:tyrus-container-grizzly-server:1.11'
+		
+        testCompile 'junit:junit:4.8.1'
+        testCompile 'org.jmock:jmock-junit4:2.5.1'
+        testCompile 'org.jmock:jmock-legacy:2.5.1'
+    }
+}
